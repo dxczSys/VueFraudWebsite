@@ -1,105 +1,27 @@
 <template>
-  <div class="container">
-    <div class="registerForm">
-    <img src="../assets/logo_1.png" class="logo" @click="backIndex"/>
-      <el-form :model="loginInfo" status-icon :rules="rules2" ref="loginInfo" label-width="100px" class="loginForm">
-        <el-form-item  prop="username">
-          <el-input type="text" v-model="loginInfo.username" auto-complete="off" class="loginInput" placeholder="用户名"></el-input>
-        </el-form-item>
-        <el-form-item  prop="password">
-          <el-input type="password" v-model="loginInfo.password" auto-complete="off" class="loginInput" placeholder="密码"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button class="loginBtn" @click="submitForm('loginInfo')" >登录</el-button>
-        </el-form-item>
-      </el-form>
-      <div class="footer-tip" @click="toRegister">
-       没有账号？直接注册
+    <div class="container">
+        <div class="registerForm">
+              <img src="../assets/title.png" class="logo" @click="backIndex"/>
+              <el-form :model="loginInfo" status-icon :rules="rules2" ref="loginInfo" label-width="100px" class="loginForm">
+                  <el-form-item  prop="username">
+                      <el-input type="text" v-model="loginInfo.username" auto-complete="off" class="loginInput" placeholder="用户名"></el-input>
+                  </el-form-item>
+                  <el-form-item  prop="password">
+                      <el-input type="password" v-model="loginInfo.password" auto-complete="off" class="loginInput" placeholder="密码"></el-input>
+                  </el-form-item>
+                  <el-form-item>
+                      <el-button class="loginBtn" @click="submitForm('loginInfo')" >登录</el-button>
+                  </el-form-item>
+              </el-form>
+              <div class="footer-tip" @click="toRegister">没有账号？直接注册</div>
+        </div>
+        <img class="bg_bottom" src="../assets/bg_bottom.png"/>
+        <img class="bg_bottom2" src="../assets/bg_bottom2.png"/>
     </div>
-    </div>
-   <img class="bg_bottom" src="../assets/bg_bottom.png"/>
-  <img class="bg_bottom2" src="../assets/bg_bottom2.png"/>
-  </div>
 </template>
 
-<style>
-@import "../assets/Animate/animate.min.css";
 
-  html * {
-    padding: 0;
-    margin: 0;
-  }
-
-  * {
-    box-sizing: border-box;
-  }
-
-  .container {
-    width: 100%;
-    border: 1px solid #ededed;
-    background: linear-gradient(#4c4c4c, #7f7f7f);
-    background-size: 100% 100%;
-    min-height: 100vh;
-  }
-
-  .registerForm {
-    background: #fff;
-    border: 1px solid #ededed;
-    width: 450px;
-    height: 320px;
-    margin: 250px auto 250px auto;
-    box-shadow: 0px 5px 8px #888;
-    border-radius: 8px;
-    position: relative;
-  }
-
-  .loginForm {
-    padding: 0 36px;
-  }
-
-  .el-form-item__content {
-    margin-left: 0px !important;
-  }
-
-  .loginInput {
-    width: 100%;
-  }
-
-  .footer-tip {
-    color: #5a5a5a;
-    font-size: 16px;
-    cursor: pointer;
-    position: absolute;
-    bottom: 16px;
-    right: 16px;
-  }
-
-  .bg_bottom {
-    position: fixed;
-    bottom: 0;
-    right: 0;
-  }
-
-  .bg_bottom2 {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-  }
-
-  .logo {
-    width: 150px;
-    height: 80px;;
-    cursor: pointer;
-    opacity: 0.7;
-  }
-
-  .loginBtn {
-    width: 100%;
-  }
-
-</style>
-
-<script>/* eslint-disable indent */
+<script>
 
   import fetch from '../api/fetch'
 
@@ -183,3 +105,69 @@
     }
   }
 </script>
+
+<style>
+  .container {
+    width: 100%;
+    border: 1px solid #ededed;
+    background: linear-gradient(#4c4c4c, #7f7f7f);
+    background-size: 100% 100%;
+    min-height: 100vh;
+  }
+
+  .registerForm {
+    background: #fff;
+    border: 1px solid #ededed;
+    width: 450px;
+    height: 320px;
+    margin: 250px auto 250px auto;
+    box-shadow: 0px 5px 8px #888;
+    border-radius: 8px;
+    position: relative;
+  }
+
+  .loginForm {
+    padding: 0 36px;
+  }
+
+  .el-form-item__content {
+    margin-left: 0px !important;
+  }
+
+  .loginInput {
+    width: 100%;
+  }
+
+  .footer-tip {
+    color: #5a5a5a;
+    font-size: 16px;
+    cursor: pointer;
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+  }
+
+  .bg_bottom {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+  }
+
+  .bg_bottom2 {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+  }
+
+  .logo {
+    width: 150px;
+    height: 80px;;
+    cursor: pointer;
+    opacity: 0.7;
+  }
+
+  .loginBtn {
+    width: 100%;
+  }
+
+</style>

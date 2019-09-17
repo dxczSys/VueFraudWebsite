@@ -5,13 +5,14 @@ import App from './App'
 import router from './router'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+import 'animate.css'
+import './assets/scss/common.scss'
 import axios from './http'
-// import messageUI from './components/message';
 
 Vue.use(ElementUI)
 Vue.config.productionTip = false
 Vue.prototype.$http = axios
-/* eslint-disable no-new */
+
 new Vue({
   el: '#app',
   router,

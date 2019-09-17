@@ -1,212 +1,42 @@
 <template>
     <div class="container">
-      <div class="hrForm">
-        <div class="choice" ref="choice">
-          <p @click="changeTabs(false)">我要找工作</p>
-          <p @click="changeTabs(true)">我要招聘</p>
+        <div class="hrForm">
+            <div class="choice" ref="choice">我要注册</div>
+
+            <el-form :model="hrInfo" status-icon :rules="hrrules" ref="hrInfo" label-width="100px" class="hrruleForm">
+                <el-form-item  prop="username">
+                    <el-input type="text" v-model="hrInfo.username" auto-complete="off" placeholder="用户名"></el-input>
+                </el-form-item>
+                <el-form-item  prop="password">
+                    <el-input type="password" v-model="hrInfo.password" auto-complete="off" placeholder="密码"></el-input>
+                </el-form-item>
+                <el-form-item prop="phone">
+                    <el-input v-model.number="hrInfo.phone" placeholder="手机号"></el-input>
+                </el-form-item>
+                <el-form-item prop="email">
+                    <el-input v-model="hrInfo.email" placeholder="邮箱"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-button class="registerBtn" @click="hrSubmit('hrInfo')">注册</el-button>
+                </el-form-item>
+            </el-form>
+
+            <div class="introduceCompany">
+                <img src="../assets/logo.png" @click="toIndex"/>
+                <p>Job-hunting and recruitment oriented to the Internet,
+                  providing more internship and job opportunities
+                  From now on, thumb up your life, start with this job.</p>
+            </div>
+
+            <div class="footer-tip3" @click="toLogin">已有账号?直接登录</div>
         </div>
-        <el-form :model="hrInfo" status-icon :rules="hrrules" ref="hrInfo" label-width="100px" class="hrruleForm">
-          <el-form-item  prop="username">
-            <el-input type="text" v-model="hrInfo.username" auto-complete="off" placeholder="用户名"></el-input>
-          </el-form-item>
-          <el-form-item  prop="password">
-            <el-input type="password" v-model="hrInfo.password" auto-complete="off" placeholder="密码"></el-input>
-          </el-form-item>
-          <!-- <el-form-item  prop="checkPass">
-            <el-input type="password" v-model="hrInfo.checkPass" auto-complete="off" placeholder="确认密码"></el-input>
-          </el-form-item> -->
-          <el-form-item prop="phone">
-            <el-input v-model.number="hrInfo.phone" placeholder="手机号"></el-input>
-          </el-form-item>
-          <!-- <el-form-item prop="code">
-          <el-input v-model.number="hrInfo.code"  style="width: 270px;padding-right: 10px;" placeholder="验证码"></el-input>
-            <el-button  @click="sendCode">{{this.msg}}</el-button>
-          </el-form-item> -->
-          <div v-if="isHr">
-            <el-form-item prop="company">
-              <el-autocomplete
-                class="choose"
-                v-model="hrInfo.company"
-                :fetch-suggestions="querySearch"
-                placeholder="请输入公司名称"
-                @select="handleSelect"
-              ></el-autocomplete>
-            </el-form-item>
-            <div @click="changeClick" class="tips" v-if="tipsShow">没有您所在的公司？请添加</div>
-          </div>
-          <el-form-item prop="email">
-            <el-input v-model="hrInfo.email" placeholder="邮箱"></el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-button class="registerBtn" @click="hrSubmit('hrInfo')">注册</el-button>
-          </el-form-item>
-        </el-form>
-        <div class="introduceCompany">
-          <img src="../assets/logo.png" @click="toIndex"/>
-          <p>Job-hunting and recruitment oriented to the Internet,
-            providing more internship and job opportunities
-            From now on, thumb up your life, start with this job.</p>
-        </div>
-        <div class="footer-tip3" @click="toLogin">
-            已有账号?直接登录
-      </div>
-      </div>
-      <el-dialog title="公司信息" :visible.sync="dialogShow">
-        <el-form :model="companyInfo" class="companyForm">
-        <el-form-item  :label-width="formLabelWidth">
-          <el-input v-model="companyInfo.name" auto-complete="off" placeholder="名称"></el-input>
-        </el-form-item>
-        <el-form-item  :label-width="formLabelWidth">
-          <el-input v-model="companyInfo.address" auto-complete="off" placeholder="地址"></el-input>
-        </el-form-item>
-        <el-form-item  :label-width="formLabelWidth">
-          <el-input v-model="companyInfo.avatar" auto-complete="off" placeholder="电话"></el-input>
-        </el-form-item>
-        <el-form-item :label-width="formLabelWidth">
-          <el-input v-model="companyInfo.introduce" auto-complete="off" placeholder="简介"></el-input>
-        </el-form-item>
-        <el-form-item  :label-width="formLabelWidth">
-          <el-input v-model="companyInfo.scale" auto-complete="off" placeholder="规模"></el-input>
-        </el-form-item>
-        <el-form-item :label-width="formLabelWidth">
-          <el-input v-model="companyInfo.type" auto-complete="off" placeholder="类型"></el-input>
-        </el-form-item>
-    </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button @click="dialogShow = false">取 消</el-button>
-      <el-button type="primary" @click="submitCompanyInfo">确 定</el-button>
-    </div>
-  </el-dialog>
-  <img class="bg_bottom" src="../assets/bg_bottom.png"/>
-  <img class="bg_bottom2" src="../assets/bg_bottom2.png"/>
+
+        <img class="bg_bottom" src="../assets/bg_bottom.png"/>
+        <img class="bg_bottom2" src="../assets/bg_bottom2.png"/>
     </div>
 </template>
 
-<style>
-@import "../assets/Animate/animate.min.css";
-  html * {
-    padding: 0;
-    margin: 0;
-  }
-
-  * {
-    box-sizing: border-box;
-  }
-
-  .container {
-    border: 1px solid #ededed;
-    width: 100%;
-    background: linear-gradient(#4c4c4c, #7f7f7f);
-    background-size: 100% 100%;
-    min-height: 100vh;
-  }
-
-  .choice {
-    text-align: left;
-    padding-left: 100px;
-  }
-
-  .choice p{
-    display: inline-block;
-    width: 173px;
-    height: 30px;
-    text-align: center;
-    line-height: 30px;
-    color: #5a5a5a;
-  }
-
-  .choice p:first-child {
-    border-right: 1px solid #ededed;
-    font-weight: 700;
-  }
-
-  .hrForm {
-    background: #fff;
-    border: 1px solid #ededed;
-    width: 840px;
-    height: 650px;
-    margin: 150px auto 150px auto;
-    box-shadow: 0px 5px 8px #888;
-    border-radius: 8px;
-    padding-top: 36px;
-    position: relative;
-  }
-
-  .el-form-item__content {
-    margin-left: 0px !important;
-  }
-
-
-  .hrruleForm {
-    width: 500px;
-    position: relative;
-    top: 14px;
-    left: -14px;
-    padding: 14px 14px 14px 100px;
-  }
-
-  .choose {
-    width: 100%;
-  }
-
-  .footer-tip3{
-    position: absolute;
-    bottom: 16px;
-    right: 16px;
-    cursor: pointer;
-    color: #5a5a5a;
-  }
-
-  .registerBtn {
-    width: 100%;
-  }
-
-  .tips {
-    margin-top: -20px;
-    text-align: left;
-    cursor: pointer;
-    color: red;
-    font-size: 14px;
-  }
-
-  .bg_bottom {
-    position: fixed;
-    bottom: 0;
-    right: 0;
-  }
-
-  .bg_bottom2 {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-  }
-
-  .introduceCompany {
-    color: #5f6368;
-    font-size: 20px;
-    font-weight: bold;
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 320px;
-    height: 600px;
-    padding: 30px 30px 0 0;
-  }
-
-  .introduceCompany img {
-    width: 300px;
-    height: 300px;;
-    margin-bottom: 20px;
-    cursor: pointer;
-  }
-
-  .companyForm {
-    padding: 0 66px;
-  }
-</style>
-
-<script>/* eslint-disable indent,quotes,space-before-function-paren,brace-style */
-
+<script>
 import fetch from '../api/fetch'
 
 export default {
@@ -497,20 +327,110 @@ export default {
             }
       })
     },
-    // 注册切换角色
-    changeTabs(isHr) {
-      if (!isHr) {
-        this.$refs.choice.firstChild.style.fontWeight = '700'
-         this.$refs.choice.lastChild.style.fontWeight = '400'
-      } else {
-        this.$refs.choice.firstChild.style.fontWeight = '400'
-        this.$refs.choice.lastChild.style.fontWeight = '700'
-      }
-      this.isHr = isHr;
-    },
     toIndex() {
       this.$router.push({name: 'index'})
     }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+  .container {
+      border: 1px solid #ededed;
+      width: 100%;
+      background: linear-gradient(#4c4c4c, #7f7f7f);
+      background-size: 100% 100%;
+      min-height: 100vh;
+  }
+
+  .choice{
+      text-align: center;
+      line-height: 30px;
+      color: #5a5a5a;
+  }
+
+  .hrForm {
+      background: #fff;
+      border: 1px solid #ededed;
+      width: 840px;
+      height: 650px;
+      margin: 150px auto 150px auto;
+      box-shadow: 0px 5px 8px #888;
+      border-radius: 8px;
+      padding-top: 36px;
+      position: relative;
+  }
+
+  
+
+
+  .hrruleForm {
+      width: 500px;
+      position: relative;
+      top: 14px;
+      left: -14px;
+      padding: 14px 14px 14px 100px;
+      /deep/ .el-form-item__content {
+          margin-left: 0px !important;
+      }
+  }
+
+  .choose {
+    width: 100%;
+  }
+
+  .footer-tip3{
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    cursor: pointer;
+    color: #5a5a5a;
+  }
+
+  .registerBtn {
+    width: 100%;
+  }
+
+  .tips {
+    margin-top: -20px;
+    text-align: left;
+    cursor: pointer;
+    color: red;
+    font-size: 14px;
+  }
+
+  .bg_bottom {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+  }
+
+  .bg_bottom2 {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+  }
+
+  .introduceCompany {
+    color: #5f6368;
+    font-size: 20px;
+    font-weight: bold;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 320px;
+    height: 600px;
+    padding: 30px 30px 0 0;
+  }
+
+  .introduceCompany img {
+    width: 300px;
+    height: 300px;;
+    margin-bottom: 20px;
+    cursor: pointer;
+  }
+
+  .companyForm {
+    padding: 0 66px;
+  }
+</style>

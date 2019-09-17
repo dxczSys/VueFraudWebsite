@@ -5,6 +5,7 @@ import index from '../views/index.vue'
 import jobInfo from '../views/jobInfo.vue'
 
 Vue.use(Router)
+
 const infoCenter = resolve => require(['../views/infoCenter.vue'], resolve)
 const login = resolve => require(['../views/login.vue'], resolve)
 const register = resolve => require(['../views/register.vue'], resolve)
@@ -15,98 +16,62 @@ const hrUserInfo = resolve => require(['../views/hrViews/userInfo.vue'], resolve
 const chat = resolve => require(['../views/chat.vue'], resolve)
 
 export default new Router({
-  routes: [
-    {
-      path: '/',
-      component: CommonPage,
-      children: [
+    routes: [
         {
-          path: '/',
-          name: 'index',
-          component: index
-        }
-      ]
-    },
-    {
-      path: '/jobInfo',
-      component: CommonPage,
-      children: [
+            path: '/',
+            component: CommonPage,
+            children: [
+                {
+                    path: '/',
+                    name: 'index',
+                    component: index
+                },
+                {
+                    path: '/jobInfo',
+                    name: 'jobInfo',
+                    component: jobInfo
+                },
+                {
+                  path: '/infoCenter',
+                  name: 'infoCenter',
+                  component: infoCenter
+                },
+                {
+                  path: '/userInfo',
+                  name: 'userInfo',
+                  component: userInfo
+                },
+                {
+                  path: '/companyDetail',
+                  name: 'companyDetail',
+                  component: companyDetail
+                },
+                {
+                  path: '/search',
+                  name: 'search',
+                  component: search
+                },
+                {
+                  path: '/hrView',
+                  name: 'hrView',
+                  component: hrUserInfo
+                }
+            ]
+        },
         {
-          path: '/',
-          name: 'jobInfo',
-          component: jobInfo
-        }
-      ]
-    },
-    {
-      path: '/infoCenter',
-      component: CommonPage,
-      children: [
+            path: '/login',
+            name: 'login',
+            component: login
+        },
         {
-          path: '/',
-          name: 'infoCenter',
-          component: infoCenter
-        }
-      ]
-    },
-    {
-      path: '/login',
-      name: 'login',
-      component: login
-    },
-    {
-      path: '/register',
-      name: 'register',
-      component: register
-    },
-    {
-      path: '/chat',
-      name: 'chat',
-      component: chat
-    },
-    {
-      path: '/userInfo',
-      component: CommonPage,
-      children: [
+            path: '/register',
+            name: 'register',
+            component: register
+        },
         {
-          path: '/',
-          name: 'userInfo',
-          component: userInfo
-        }
-      ]
-    },
-    {
-      path: '/companyDetail',
-      component: CommonPage,
-      children: [
-        {
-          path: '/',
-          name: 'companyDetail',
-          component: companyDetail
-        }
-      ]
-    },
-    {
-      path: '/search',
-      component: CommonPage,
-      children: [
-        {
-          path: '',
-          name: 'search',
-          component: search
-        }
-      ]
-    },
-    {
-      path: '/hrView',
-      component: CommonPage,
-      children: [
-        {
-          path: '/',
-          name: 'hrView',
-          component: hrUserInfo
-        }
-      ]
-    }
-  ]
+            path: '/chat',
+            name: 'chat',
+            component: chat
+        },
+    ]
 })

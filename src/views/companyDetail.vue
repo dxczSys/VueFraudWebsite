@@ -100,9 +100,6 @@ export default {
   },
   methods: {
     openChat() {
-      this.$router.push({
-        name : 'chat'
-      })
     },
     getCompanyInfo () {
       fetch.getCompanyDetail(this.companyId)

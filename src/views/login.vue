@@ -67,7 +67,7 @@
             }
             this.api.userLogin(_params).then(res => {
                 if (res.status === 200 && res.data.code) {
-                    localStorage.setItem('userId', res.data.msg.uname)
+                    sessionStorage.setItem('username', res.data.msg.uname)
                     this.$router.push({ name: 'userInfo', params: {refresh: 1} })
                     // this.$router.push({ name: 'hrView', params: {hrRefresh: 2} })
                 }else {

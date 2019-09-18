@@ -13,7 +13,6 @@ const userInfo = resolve => require(['../views/userInfo.vue'], resolve)
 const companyDetail = resolve => require(['../views/companyDetail.vue'], resolve)
 const search = resolve => require(['../views/searchRes.vue'], resolve)
 const hrUserInfo = resolve => require(['../views/hrViews/userInfo.vue'], resolve)
-const chat = resolve => require(['../views/chat.vue'], resolve)
 
 export default new Router({
     routes: [
@@ -67,11 +66,6 @@ export default new Router({
             path: '/register',
             name: 'register',
             component: register
-        },
-        {
-            path: '/chat',
-            name: 'chat',
-            component: chat
         },
     ]
 })

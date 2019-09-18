@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div class="registerForm">
+        <div class="registerForm animated bounceInDown">
               <img src="../assets/title.png" class="logo" @click="backIndex"/>
               <el-form :model="loginInfo" status-icon :rules="rules2" ref="loginInfo" label-width="100px" class="loginForm">
                   <el-form-item  prop="username">
@@ -20,11 +20,7 @@
     </div>
 </template>
 
-
 <script>
-
-  import fetch from '../api/fetch'
-
   export default {
     data () {
       var validUsername = (rule, value, callback) => {
@@ -52,52 +48,31 @@
         }
       }
     },
-    mounted() {
-        this.addAnimation()
-    },
+
     methods: {
-      addAnimation() {
-        let form = document.getElementsByClassName('registerForm')[0];
-        form.classList.add('animated')
-        form.classList.add('bounceInDown')
-      },
       backIndex () {
-        this.$router.push({name: 'index'})
+        this.$router.push({ name: 'index' })
       },
+
       toRegister () {
-        this.$router.push({name: 'register'})
+        this.$router.push({ name: 'register' })
       },
+
       submitForm (formName) {
         this.$refs[formName].validate(valid => {
           if (valid) {
             let _params = {
-              uname:this.loginInfo.username,
-              upasswd:this.loginInfo.password
+              uname : this.loginInfo.username,
+              upasswd : this.loginInfo.password
             }
-            fetch.userLogin(_params)
-              .then(res => {
-                if (res.status === 200) {
-                  debugger
-                  //返回code--->1用户   2--->公司
-                  if (res.data.code == 1) {
-                    //localStorage.setItem('token', res.data.data.token);
-                    localStorage.setItem('role', '2')
+            this.api.userLogin(_params).then(res => {
+                if (res.status === 200 && res.data.code) {
                     localStorage.setItem('userId', res.data.msg.uname)
-                    this.$router.push({name: 'userInfo', params: {refresh: 1}})
-                  } else if(res.data.code == 2){
-                    localStorage.setItem('role', '1')
-                    localStorage.setItem('companyId', res.data.msg.cname)
-                    this.$router.push({name: 'hrView', params: {hrRefresh: 2}})
-                  }else{
-                    this.$message({
-                      message: '用户名或密码错误',
-                      type: 'warning'
-                    })
-                  }
+                    this.$router.push({ name: 'userInfo', params: {refresh: 1} })
+                    // this.$router.push({ name: 'hrView', params: {hrRefresh: 2} })
+                }else {
+                    this.$message.warning('用户名或密码错误')
                 }
-              })
-              .catch(e => {
-                console.log(e)
               })
           }
         })

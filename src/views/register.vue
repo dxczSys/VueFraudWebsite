@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div class="hrForm">
+        <div class="hrForm animated bounceInDown">
             <div class="choice" ref="choice">我要注册</div>
 
             <el-form :model="hrInfo" status-icon :rules="hrrules" ref="hrInfo" label-width="100px" class="hrruleForm">
@@ -22,10 +22,8 @@
             </el-form>
 
             <div class="introduceCompany">
-                <img src="../assets/logo.png" @click="toIndex"/>
-                <p>Job-hunting and recruitment oriented to the Internet,
-                  providing more internship and job opportunities
-                  From now on, thumb up your life, start with this job.</p>
+                <img src="../assets/logo_s.png" @click="toIndex"/>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo.</p>
             </div>
 
             <div class="footer-tip3" @click="toLogin">已有账号?直接登录</div>
@@ -37,381 +35,156 @@
 </template>
 
 <script>
-import fetch from '../api/fetch'
-
 export default {
-  data() {
-    var checkCode = (rule, value, callback) => {
-      if (!value) {
-        return callback(new Error("请输入验证码"))
-      } else {
-        callback()
-      }
-    }
-    var checkCompany = (rule, value, callback) => {
-      if (!value) {
-        return callback(new Error("请选择公司"))
-      } else {
-        return callback()
-      }
-
-    }
-    var checkPhone = (rule, value, callback) => {
-      if (!value) {
-        return callback(new Error("请输入手机号"))
-      } else {
-        callback()
-      }
-    }
-    var checkEmail = (rule, value, callback) => {
-      if (!value) {
-        return callback(new Error("请输入邮箱"))
-      } else {
-        callback()
-      }
-    }
-    var validUsername = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("请输入用户名"))
-      } else {
-        callback()
-      }
-    }
-    var validatePass = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("请输入密码"))
-      } else {
-        if (this.hrInfo.checkPass !== "") {
-          this.$refs.hrInfo.validateField("checkPass")
+    data() {
+        let checkPhone = (rule, value, callback) => {
+            if (!value) {
+                return callback(new Error("请输入手机号"))
+            } else {
+                callback()
+            }
         }
-        callback()
-      }
-    }
-    var validatePass2 = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("请再次输入密码"))
-      } else if (value !== this.hrInfo.password) {
-        callback(new Error("两次输入密码不一致!"))
-      } else {
-        callback()
-      }
-    }
-    return {
-      msg: "发送验证码",
-      count: "",
-      timer: null,
-      show: true,
-      confirmCode: "",
-      companyId: "",
-      isHr: false,
-      options: [],
-      dialogShow: false,
-      tipsShow: false,
-      companyInfo: {
-        name: '',
-        address : '',
-        avatar: '',
-        introduce: '',
-        scale: '',
-        type: ''
-      },
-      formLabelWidth: '120px',
-      hrInfo: {
-        password: "",
-        checkPass: "",
-        phone: "",
-        username: "",
-        email: "",
-        company: "",
-        code: ""
-      },
-      hrrules: {
-        code: [{validator: checkCode, trigger: "blur"}],
-        company: [{validator: checkCompany, trigger: "blur"}],
-        username: [{validator: validUsername, trigger: "blur"}],
-        password: [{validator: validatePass, trigger: "blur"}],
-        checkPass: [{validator: validatePass2, trigger: "blur"}],
-        phone: [{validator: checkPhone, trigger: "blur"}],
-        email: [{validator: checkEmail, trigger: "blur"}]
-      }
-    }
-  },
 
-  mounted() {
-    this.getCompany()
-    this.addAnimation()
-  },
+        var checkEmail = (rule, value, callback) => {
+            if (!value) {
+                return callback(new Error("请输入邮箱"))
+            } else {
+                callback()
+            }
+        }
 
-  methods: {
-    addAnimation() {
-      let form = document.getElementsByClassName('hrForm')[0]
-      form.classList.add('animated')
-      form.classList.add('bounceInDown')
+        var validUsername = (rule, value, callback) => {
+            if (value === "") {
+                callback(new Error("请输入用户名"))
+            } else {
+                callback()
+            }
+        }
+
+        var validatePass = (rule, value, callback) => {
+            if (value === "") {
+                callback(new Error("请输入密码"))
+            } else {
+                callback()
+            }
+        }
+
+        return {
+            hrInfo: {
+                password: "",
+                phone: "",
+                username: "",
+                email: "",
+            },
+            hrrules: {
+                username: [{ validator : validUsername, trigger : "blur" }],
+                password: [{ validator : validatePass, trigger : "blur" }],
+                phone: [{ validator : checkPhone, trigger : "blur" }],
+                email: [{ validator : checkEmail, trigger : "blur" }]
+            }
+        }
     },
 
-    sendCode() {
-      const TIME_COUNT = 60
-      fetch
-        .sendCode(this.hrInfo.phone)
-        .then(res => {
-          if (res.status === 200) {
-            if (res.data.success === true) {
-              $message({
-                message: '发送成功',
-                type: 'success'
-              })
-            }
-          }
-        })
-        .catch(e => {
-          console.log(e)
-        })
-      if (!this.timer) {
-        this.count = TIME_COUNT
-        this.show = false
-        this.timer = setInterval(() => {
-          if (this.count > 0 && this.count <= TIME_COUNT) {
-            this.count--
-            this.msg = this.count + "s后发送"
-            if (this.count === 0) {
-              this.msg = '发送验证码'
-            }
-          } else {
-            this.show = true
-            clearInterval(this.timer)
-            this.timer = null
-          }
-        }, 1000)
-      }
+    mounted() {
     },
 
-    hrSubmit(formName) {
-      this.$refs[formName].validate(valid => {
-        if (valid && !this.tipsShow) {
-          let result = {
-            uemail: this.hrInfo.email,
-            upasswd: this.hrInfo.password,
-            uphone: this.hrInfo.phone,
-            uname: this.hrInfo.username,
-            // code: this.hrInfo.code,
-          }
-          // hr注册
-          if (this.isHr) {
-            let _ressult = {
-              cname: this.hrInfo.username,
-              cpasswd:this.hrInfo.password,
-              cphone:this.hrInfo.phone,
-              ccompanyname:this.companyId,
-              cemail:this.hrInfo.email
-            }
-            // result.companyId = this.companyId;
-            fetch.hrRegister(_ressult).then(res => {
-            if (res.status == 200) {
-                if (res.data.code) {
-                  this.$message({
-                    message: "注册成功",
-                    type: "success"
-                  });
-                  this.$router.push({ name: "login" });
-                } else {
-                  this.$message({
-                    message: res.data.msg,
-                    type: "warning"
-                   });
+    methods: {
+        hrSubmit(formName) {
+            this.$refs[formName].validate(valid => {
+                if (valid) {
+                    let result = {
+                        uemail: this.hrInfo.email,
+                        upasswd: this.hrInfo.password,
+                        uphone: this.hrInfo.phone,
+                        uname: this.hrInfo.username,
+                    }
+                    this.api.userRegister(result).then(res => {
+                        if (res.status == 200 && res.data.code) {
+                            this.$message.success('注册成功')
+                            this.$router.push({ name: "login" })
+                        }else {
+                            this.$message.warning( res.data.msg )
+                        }
+                    })
                 }
-               }
-            }).catch(e => {
-            console.log(e)
-          })
-        } else {
-
-        // 用户注册
-        fetch
-          .userRegister(result)
-          .then(res => {
-            if (res.status == 200) {
-              if (res.data.code) {
-                  this.$message({
-                    message: "注册成功",
-                    type: "success"
-                  });
-                  this.$router.push({ name: "login" });
-                } else {
-                  this.$message({
-                    message: res.data.msg,
-                    type: "warning"
-                    });
-                }
-               }
             })
-            .catch(e => {
-              this.$message({
-                message: "注册失败",
-                type: "warning"
-              });
-            });
+        },
+
+        toLogin() {
+            this.$router.push({name: "login"})
+        },
+
+        toIndex() {
+            this.$router.push({name: 'index'})
         }
-        }
-      })
-    },
-
-    // 获取公司职位名称
-    getCompany() {
-      fetch.getCompany1()
-        .then(res => {
-          console.log(res)
-          for (let item of res.data.msg) {
-            this.options.push({value: item.cname, label: item.cid})
-          }
-        })
-        .catch(e => {
-          console.log(e)
-        })
-    },
-
-    toLogin() {
-      this.$router.push({name: "login"})
-    },
-
-    // 公司查询
-    querySearch(queryString, cb) {
-        var options = this.options;
-        var results = queryString ? options.filter(this.createFilter(queryString)) : options;
-        // 调用 callback 返回建议列表的数据
-        console.log('ressshs', results)
-        if (results.length === 0) {
-          this.tipsShow = true;
-        } else {
-          this.tipsShow = false;
-        }
-        cb(results);
-    },
-
-    createFilter(queryString) {
-      let option = this.options
-        return (option) => {
-          return (option.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
-        };
-    },
-    // 选择公司
-    handleSelect(item) {
-      this.companyId = item.label;
-    },
-    // 控制添加公司弹窗显示
-    changeClick() {
-      this.dialogShow = true;
-    },
-    // 提交公司信息
-    submitCompanyInfo() {
-      let _obj = {
-        cname : this.companyInfo.name,
-        caddress : this.companyInfo.address,
-        clogo : this.companyInfo.avatar,
-        cinfo : this.companyInfo.introduce,
-        cscale : this.companyInfo.scale,
-        ctype : this.companyInfo.type
-      } 
-
-      fetch.addCompany(_obj).then(res => {
-          if (res.data.code) {
-              this.$message({
-                message: "添加成功",
-                type: "success"
-              });
-              this.$router.push({ name: "login" });
-              } else {
-                this.$message({
-                  message: res.data.msg,
-                  type: "warning"
-                });
-            }
-      })
-    },
-    toIndex() {
-      this.$router.push({name: 'index'})
     }
-  }
 }
 </script>
 
 <style lang="scss" scoped>
-  .container {
-      border: 1px solid #ededed;
-      width: 100%;
-      background: linear-gradient(#4c4c4c, #7f7f7f);
-      background-size: 100% 100%;
-      min-height: 100vh;
-  }
-
-  .choice{
-      text-align: center;
-      line-height: 30px;
-      color: #5a5a5a;
-  }
-
-  .hrForm {
-      background: #fff;
-      border: 1px solid #ededed;
-      width: 840px;
-      height: 650px;
-      margin: 150px auto 150px auto;
-      box-shadow: 0px 5px 8px #888;
-      border-radius: 8px;
-      padding-top: 36px;
-      position: relative;
-  }
-
-  
-
-
-  .hrruleForm {
-      width: 500px;
-      position: relative;
-      top: 14px;
-      left: -14px;
-      padding: 14px 14px 14px 100px;
-      /deep/ .el-form-item__content {
-          margin-left: 0px !important;
-      }
-  }
-
-  .choose {
+.container {
+    border: 1px solid #ededed;
     width: 100%;
-  }
+    background: linear-gradient(#4c4c4c, #7f7f7f);
+    background-size: 100% 100%;
+    min-height: 100vh;
+}
 
-  .footer-tip3{
+.choice{
+    text-align: center;
+    line-height: 30px;
+    color: #5a5a5a;
+    padding-right: 285px;
+}
+
+.hrForm {
+    background: #fff;
+    border: 1px solid #ededed;
+    width: 840px;
+    height: 650px;
+    margin: 150px auto 150px auto;
+    box-shadow: 0px 5px 8px #888;
+    border-radius: 8px;
+    padding-top: 36px;
+    position: relative;
+}
+
+.hrruleForm {
+    width: 500px;
+    position: relative;
+    top: 14px;
+    left: -14px;
+    padding: 14px 14px 14px 100px;
+    /deep/ .el-form-item__content {
+        margin-left: 0px !important;
+    }
+}
+
+.footer-tip3{
     position: absolute;
     bottom: 16px;
     right: 16px;
     cursor: pointer;
     color: #5a5a5a;
-  }
+}
 
-  .registerBtn {
+.registerBtn {
     width: 100%;
-  }
+}
 
-  .tips {
-    margin-top: -20px;
-    text-align: left;
-    cursor: pointer;
-    color: red;
-    font-size: 14px;
-  }
-
-  .bg_bottom {
+.bg_bottom {
     position: fixed;
     bottom: 0;
     right: 0;
-  }
+}
 
-  .bg_bottom2 {
+.bg_bottom2 {
     position: fixed;
     bottom: 0;
     left: 0;
-  }
+}
 
-  .introduceCompany {
+.introduceCompany {
     color: #5f6368;
     font-size: 20px;
     font-weight: bold;
@@ -421,16 +194,16 @@ export default {
     width: 320px;
     height: 600px;
     padding: 30px 30px 0 0;
-  }
+}
 
-  .introduceCompany img {
+.introduceCompany img {
     width: 300px;
     height: 300px;;
     margin-bottom: 20px;
     cursor: pointer;
-  }
+}
 
-  .companyForm {
+.companyForm {
     padding: 0 66px;
-  }
+}
 </style>

@@ -2,17 +2,15 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import CommonPage from '../components/common/commonPage.vue'
 import index from '../views/index.vue'
-import jobInfo from '../views/jobInfo.vue'
 
 Vue.use(Router)
 
-const infoCenter = resolve => require(['../views/infoCenter.vue'], resolve)
 const login = resolve => require(['../views/login.vue'], resolve)
 const register = resolve => require(['../views/register.vue'], resolve)
-const userInfo = resolve => require(['../views/userInfo.vue'], resolve)
-const companyDetail = resolve => require(['../views/companyDetail.vue'], resolve)
-const search = resolve => require(['../views/searchRes.vue'], resolve)
-const hrUserInfo = resolve => require(['../views/hrViews/userInfo.vue'], resolve)
+const hrUserInfo = resolve => require(['../views/userInfo.vue'], resolve)
+const addNews = resolve => require(['../views/addNews.vue'], resolve)
+const newsList = resolve => require(['../views/newsList.vue'], resolve)
+const browseNews = resolve => require(['../views/browseNews.vue'], resolve)
 
 export default new Router({
     routes: [
@@ -26,34 +24,24 @@ export default new Router({
                     component: index
                 },
                 {
-                    path: '/jobInfo',
-                    name: 'jobInfo',
-                    component: jobInfo
+                    path: '/hrView',
+                    name: 'hrView',
+                    component: hrUserInfo
                 },
                 {
-                  path: '/infoCenter',
-                  name: 'infoCenter',
-                  component: infoCenter
+                    path : '/addNews',
+                    name : 'addNews',
+                    component : addNews
                 },
                 {
-                  path: '/userInfo',
-                  name: 'userInfo',
-                  component: userInfo
+                    path : '/newsList',
+                    name : 'newsList',
+                    component : newsList
                 },
                 {
-                  path: '/companyDetail',
-                  name: 'companyDetail',
-                  component: companyDetail
-                },
-                {
-                  path: '/search',
-                  name: 'search',
-                  component: search
-                },
-                {
-                  path: '/hrView',
-                  name: 'hrView',
-                  component: hrUserInfo
+                    path : '/browseNews',
+                    name : 'browseNews',
+                    component : browseNews
                 }
             ]
         },

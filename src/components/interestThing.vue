@@ -1,7 +1,7 @@
 <template>
     <div class="wrapper">
         <div class="operate">
-            <el-button type="primary" size="small" icon="el-icon-plus">新增</el-button>
+            <el-button type="primary" size="small" icon="el-icon-plus" @click="routerLink">新增</el-button>
         </div>
 
         <div class="content-intere">
@@ -11,7 +11,7 @@
                 <el-table-column prop="date" label="创建日期" width="200" align="center" header-align="center"></el-table-column>
                 <el-table-column label="操作" width="100" align="center" header-align="center">
                     <template slot-scope="scope">
-                        <el-button type="text">删除</el-button>
+                        <el-button type="text" @click="deleteNews(scope)">删除</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -36,7 +36,13 @@ export default {
     methods : {
         getTable() {
 
-        }
+        },
+
+        routerLink() {
+            this.$router.push({ name : 'addNews' , query : { tabName : this.tabIndex }})
+        },
+
+        deleteNews(item) {}
     }
 }
 </script>

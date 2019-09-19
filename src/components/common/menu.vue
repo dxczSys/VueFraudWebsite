@@ -8,15 +8,15 @@
                     <el-menu-item index="1" @click="routerLink(1)">首页</el-menu-item>
                     <el-submenu index="2">
                         <template slot="title">诈骗趣事</template>
-                        <el-menu-item index="2-1">电信诈骗</el-menu-item>
-                        <el-menu-item index="2-2">网络诈骗</el-menu-item>
-                        <el-menu-item index="2-3">钓鱼木马</el-menu-item>
+                        <el-menu-item index="2-1" @click="routerLink(2.1)">电信诈骗</el-menu-item>
+                        <el-menu-item index="2-2" @click="routerLink(2.2)">网络诈骗</el-menu-item>
+                        <el-menu-item index="2-3" @click="routerLink(2.3)">钓鱼木马</el-menu-item>
                     </el-submenu>
                     <el-submenu index="3">
                         <template slot="title">曝光栏</template>
-                        <el-menu-item index="3-1">生活区</el-menu-item>
-                        <el-menu-item index="3-2">缴费区</el-menu-item>
-                        <el-menu-item index="3-3">购物区</el-menu-item>
+                        <el-menu-item index="3-1" @click="routerLink(3.1)">生活区</el-menu-item>
+                        <el-menu-item index="3-2" @click="routerLink(3.2)">缴费区</el-menu-item>
+                        <el-menu-item index="3-3" @click="routerLink(3.3)">购物区</el-menu-item>
                     </el-submenu>
                     <el-menu-item index="4" @click="routerLink(4)">举报</el-menu-item>
                     <el-menu-item index="5" @click="routerLink(5)">管理中心</el-menu-item>
@@ -75,6 +75,14 @@ export default {
             switch(num) {
                 case 1 : 
                     this.$router.push({ name : 'index' });
+                    break;
+                case 2.1 : 
+                case 2.2 :
+                case 2.3 :
+                case 3.1 :
+                case 3.2 :
+                case 3.3 :
+                    this.$router.push({ name : 'newsList', query : { typeIndex : num} });
                     break;
                 case 4 : 
                     window.open('http://www.cyberpolice.cn/wfjb/frame/impeach/showInformation.jsp?type=0', '_blank');

@@ -1,6 +1,6 @@
 <template>
     <div class="wrapper">
-        <el-form ref="form" :model="form" label-position="left" label-width="40px" class="new-form">
+        <el-form ref="form" :model="form" label-position="left" label-width="50px" class="new-form">
             <el-form-item label="标题">
                 <el-input v-model="form.title"></el-input>
             </el-form-item>

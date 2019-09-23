@@ -9,9 +9,9 @@
 
         <div class="content">
             <ul class="list-news">
-                <li v-for="(item, index) in contentData" :key="index" class="news-item" @click="routerLinks(item)">
-                    <soan class="news-title">{{item.title}}</soan>
-                    <soan class="news-date">{{item.date}}</soan>
+                <li v-for="(item1, index1) in contentData" :key="index1" class="news-item" @click="routerLinks(item1)">
+                    <span class="news-title">{{item1.title}}</span>
+                    <span class="news-date">{{item1.date}}</span>
                 </li>
             </ul>
         </div>
@@ -53,6 +53,12 @@ export default {
                     break;
             }
             return arr
+        }
+    },
+
+    watch : {
+        '$route'(to, from) {
+            this.index = to.query.typeIndex
         }
     },
 

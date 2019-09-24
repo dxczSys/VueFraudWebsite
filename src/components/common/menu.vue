@@ -38,10 +38,13 @@
                 </span>
                 <span v-if="!isShow" class="tab" @click="logout()" >退出登录</span>
             </div>
+
+            <theme-picker style="margin-top:10px;"></theme-picker>
         </div>
     </header>
 </template>
 <script>
+import themePicker from '../themePicker'
 export default {
     data () {
 
@@ -51,6 +54,8 @@ export default {
             isShow: true,   //登录注册按钮控制
         }
     },
+
+    components : { themePicker },
 
     created () {
     },

@@ -1,18 +1,18 @@
 // const host = 'http://pf.stalary.com'
-const host = ''
+const host = '/api'
 
 export default {
   getCompany (name) {
-    return '/companySelByName?name=' + name
+    return host +  '/companySelByName?name=' + name
   },
   getCompany1 () {
-    return '/companySel'
+    return host +  '/companySel'
   },
   getJobinfo1 () {
-    return '/UserinfoSel'
+    return host +  '/UserinfoSel'
   },
   addComp () {
-    return '/companyAdd'
+    return host +  '/companyAdd'
   },
   userRegister () {
     return host + '/userAdd'
@@ -22,10 +22,10 @@ export default {
     return host + '/company/noPage'
   },
   userLogin () {
-    return '/userLogin'
+    return host +  '/userLog'
   },
   getUserInfo () {
-    return '/UserinfoSelByUid'
+    return host +  '/UserinfoSelByUid'
   },
   sendCode () {
     return host + '/outside/code'
@@ -35,7 +35,7 @@ export default {
   },
   // 提交简历信息
   sendResume () {
-    return '/ResumeAdd'
+    return host +  '/ResumeAdd'
   },
   // 获取投递列表
   deliveryList () {
@@ -43,27 +43,27 @@ export default {
   },
   // 提交用户信息
   putUserInfo () {
-    return '/UserinfoAdd'
+    return host +  '/UserinfoAdd'
   },
   // 修改用户手机号码
   changePhone () {
-    return host + '/user/phone'
+    return host + '/userUpd'
   },
   // 修改用户密码
   changePass () {
-    return host + '/user/password'
+    return host + '/userUpd'
   },
   // 修改用户邮箱
   changeEmail () {
-    return host + '/user/email'
+    return host + '/userUpd'
   },
   // 获取公司详情
   getCompanyDetail (id) {
-    return '/companySelByName1?name=' + id
+    return host +  '/companySelByName1?name=' + id
   },
   // 获取简历信息
   getResume () {
-    return '/ResumeSelByUid'
+    return host +  '/ResumeSelByUid'
   },
   // 获取岗位详细信息
   getJobDetail (id) {
@@ -91,17 +91,17 @@ export default {
   },
   // hr发布职位信息
   publishJob () {
-    return '/JobAdd'
+    return host +  '/JobAdd'
   },
   // 查看hr发布的职位信息
   checkJob () {
-    return '/JobSelByUid'
+    return host +  '/JobSelByUid'
   },
   deletejob (id) {
-    return '/JobDel?id=' + id
+    return host +  '/JobDel?id=' + id
   },
   hrRegister () {
-    return '/customerAdd'
+    return host +  '/customerAdd'
   },
   // 推荐候选人
   recommendCandidate () {
@@ -113,6 +113,6 @@ export default {
   },
   // 获取感兴趣的工作
   getRecommandJob () {
-    return host + '/recruit/name'
+    return hos + '/recruit/name'
   }
 }

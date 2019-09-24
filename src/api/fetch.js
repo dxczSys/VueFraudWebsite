@@ -42,14 +42,14 @@ export default {
   putUserInfo (userInfo) {
     return axios.post(api.putUserInfo(), JSON.stringify(userInfo), {headers: headers})
   },
-  changePhone (phone) {
-    return axios.put(api.changePhone(), JSON.stringify(phone), {headers: headers})
+  changePhone (uphone) {
+    return axios.post(api.changePhone(), JSON.stringify(uphone), {headers: headers})
   },
   changePass (password) {
-    return axios.put(api.changePass(), JSON.stringify(password), {headers: headers})
+    return axios.post(api.changePass(), JSON.stringify(password), {headers: headers})
   },
   changeEmail (email) {
-    return axios.put(api.changeEmail(), JSON.stringify(email), {headers: headers})
+    return axios.post(api.changeEmail(), JSON.stringify(email), {headers: headers})
   },
   getCompanyDetail (id) {
     return axios.get(api.getCompanyDetail(id), {headers: headers})

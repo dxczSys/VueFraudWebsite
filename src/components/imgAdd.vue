@@ -17,7 +17,7 @@
 export default {
     data() {
         return {
-            url : '/Law/Law/upload',    //上传文件地址
+            url : '/api/upload',    //上传文件地址
             imagesList : [],            //图片数组
             fileList : [],              //上传存放
         }

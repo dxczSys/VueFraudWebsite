@@ -77,14 +77,14 @@ export default {
         }
         return {
             phoneForm: {
-                phone: ''
+                uphone: ''
             },
             passForm: {
-                password: '',
+                upassword: '',
                 checkpass: ''
             },
             emailForm: {
-                email: ''
+                uemail: ''
             },
 
             phonerules: {
@@ -115,7 +115,7 @@ export default {
         changePass (formName) {
             this.$refs[formName].validate(valid => {
                 if (valid) {
-                    this.api.changePass(this.passForm.checkpass).then(res => {
+                    this.api.changePass(this.passForm.upassword).then(res => {
                         if (res.data.code) {
                             this.$message.success('修改成功')
                         }

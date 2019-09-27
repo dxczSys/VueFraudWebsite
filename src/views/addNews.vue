@@ -5,7 +5,7 @@
                 <el-input v-model="form.title"></el-input>
             </el-form-item>
             <el-form-item label="分类">
-                <el-select v-model="form.type">
+                <el-select v-model="form.type" style="width:300px;">
                     <el-option v-for="(item, index) in options" :key="index" :label="item.label" :value="item.value"></el-option>
                 </el-select>
             </el-form-item>

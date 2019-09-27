@@ -6,21 +6,26 @@
 
         <div class="content-intere">
             <el-table :data="tableData" border style="width: 100%">
+                <el-table-column type="index" align="center" header-align="center"></el-table-column>
                 <el-table-column prop="title" label="标题" min-width="180" header-align="center"></el-table-column>
                 <el-table-column label="分类" width="180" align="center" header-align="center">
                     <template slot-scope="scope">
-                        <span v-if="scope.row.type == '1'"></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
+                        <span v-if="scope.row.type == '1'">电信诈骗</span>
+                        <span v-if="scope.row.type == '2'">网络诈骗</span>
+                        <span v-if="scope.row.type == '3'">钓鱼木马</span>
+                        <span v-if="scope.row.type == '4'">生活区</span>
+                        <span v-if="scope.row.type == '5'">缴费区</span>
+                        <span v-if="scope.row.type == '6'">购物区</span>
                     </template>
                 </el-table-column>
-                <el-table-column prop="cdate" label="创建日期" width="200" align="center" header-align="center"></el-table-column>
+                <el-table-column label="创建日期" width="200" align="center" header-align="center">
+                    <template slot-scope="scope">
+                        {{dateFormat('YYYY-mm-dd', new Date(scope.row.cdate))}}
+                    </template>
+                </el-table-column>
                 <el-table-column label="操作" width="100" align="center" header-align="center">
                     <template slot-scope="scope">
-                        <el-button type="text" @click="deleteNews(scope)">删除</el-button>
+                        <el-button type="text" @click="deleteNews(scope.row.id)">删除</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -58,7 +63,35 @@ export default {
             this.$router.push({ name : 'addNews' , query : { tabName : this.tabIndex }})
         },
 
-        deleteNews(item) {}
+        deleteNews(item) {
+            //删除接口 你删了个锤子？
+            let self = this
+            this.api.delNews(item).then(res => {
+                if (res.data.code) {
+                    self.$message.success('删除成功！')
+                    self.getTable()
+                }
+            })
+        },
+
+        dateFormat(fmt, date) {
+		    let ret
+		    let opt = {
+		        "Y+": date.getFullYear().toString(),       
+		        "m+": (date.getMonth() + 1).toString(),     
+		        "d+": date.getDate().toString(),            
+		        "H+": date.getHours().toString(),           
+		        "M+": date.getMinutes().toString(),         
+		        "S+": date.getSeconds().toString()         
+		    }
+		    for (let k in opt) {
+		        ret = new RegExp("(" + k + ")").exec(fmt);
+		        if (ret) {
+		            fmt = fmt.replace(ret[1], (ret[1].length == 1) ? (opt[k]) : (opt[k].padStart(ret[1].length, "0")))
+		        }
+		    }
+		    return fmt
+		}
     }
 }
 </script>

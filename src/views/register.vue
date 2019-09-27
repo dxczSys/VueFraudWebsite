@@ -21,16 +21,14 @@
                 </el-form-item>
             </el-form>
 
-            <div class="introduceCompany">
+            <!-- <div class="introduceCompany">
                 <img src="../assets/logo_s.png" @click="toIndex"/>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo.</p>
-            </div>
+            </div> -->
 
             <div class="footer-tip3" @click="toLogin">已有账号?直接登录</div>
         </div>
 
-        <img class="bg_bottom" src="../assets/bg_bottom.png"/>
-        <img class="bg_bottom2" src="../assets/bg_bottom2.png"/>
     </div>
 </template>
 
@@ -125,7 +123,6 @@ export default {
 .container {
     border: 1px solid #ededed;
     width: 100%;
-    background: linear-gradient(#4c4c4c, #7f7f7f);
     background-size: 100% 100%;
     min-height: 100vh;
 }
@@ -134,14 +131,14 @@ export default {
     text-align: center;
     line-height: 30px;
     color: #5a5a5a;
-    padding-right: 285px;
+    //padding-right: 285px;
 }
 
 .hrForm {
     background: #fff;
     border: 1px solid #ededed;
-    width: 840px;
-    height: 650px;
+    width: 545px;
+    height: 463px;
     margin: 150px auto 150px auto;
     box-shadow: 0px 5px 8px #888;
     border-radius: 8px;

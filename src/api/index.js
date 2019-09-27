@@ -127,5 +127,20 @@ export default {
   },
   getNewsList() {
     return '/api/InfoSel'
+  },
+  delNews(id) {
+    return '/api/InfoDel?id=' + id
+  },
+  getOnlyNewsList(num) {
+    return '/api/InfoSelByType?num=' + num
+  },
+  getNewsByid(id) {
+    return '/api/InfoSelById?id=' + id
+  },
+  getSixNewsData() {
+    return '/api/getSixNewsData'
+  },
+  blurrySearch(title) {
+    return '/api/getInfoByTitle?title=' + title
   }
 }

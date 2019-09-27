@@ -18,9 +18,9 @@
                 <div class="news-box">
                     <div class="news-title"></div>
                     <ul class="news-ul">
-                        <li v-for="(item, index) in newData" :key="index">
+                        <li v-for="(item, index) in newData" :key="index" @click="routerLinks(item.id)">
                             <span class="list-title">{{item.title}}</span>
-                            <span class="list-date">{{item.date}}</span>
+                            <span class="list-date">{{dateFormat('YYYY-mm-dd', new Date(item.cdate))}}</span>
                         </li>
                     </ul>
                 </div>
@@ -44,7 +44,7 @@
 export default {
     data () {
         return {
-            crouselImg: [],
+            crouselImg: [],  //轮播图地址列表
             newData : [],  //头条新闻列表
         }
     },
@@ -59,31 +59,36 @@ export default {
                 })
             }
         })
-
-        this.newData = [
-            {
-                title : '2019年8月举报受理处置情况',
-                date : '2019-09-12'
-            }, {
-                title : '「净网2019」五大类诈骗，不得不防',
-                date : '2019-08-29'
-            }, {
-                title : '2019年5-7月举报受理处置情况',
-                date : '2019-08-15'
-            }, {
-                title : '2019年5-7月举报受理处置情况',
-                date : '2019-08-15'
-            }, {
-                title : '2019年5-7月举报受理处置情况',
-                date : '2019-08-15'
-            }, {
-                title : '2019年5-7月举报受理处置情况',
-                date : '2019-08-15'
-            }
-        ]
+        this.getSixNews()
     },
 
     methods: {
+        getSixNews() {
+            this.api.getSixNewsData().then(res => {
+                this.newData = res.data
+            })
+        },
+        routerLinks(item) {
+            this.$router.push({ name : 'browseNews', query : {id : item} })
+        },
+        dateFormat(fmt, date) {
+		    let ret
+		    let opt = {
+		        "Y+": date.getFullYear().toString(),       
+		        "m+": (date.getMonth() + 1).toString(),     
+		        "d+": date.getDate().toString(),            
+		        "H+": date.getHours().toString(),           
+		        "M+": date.getMinutes().toString(),         
+		        "S+": date.getSeconds().toString()         
+		    }
+		    for (let k in opt) {
+		        ret = new RegExp("(" + k + ")").exec(fmt);
+		        if (ret) {
+		            fmt = fmt.replace(ret[1], (ret[1].length == 1) ? (opt[k]) : (opt[k].padStart(ret[1].length, "0")))
+		        }
+		    }
+		    return fmt
+		}
     },
 
 }

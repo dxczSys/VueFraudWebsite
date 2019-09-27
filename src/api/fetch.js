@@ -114,5 +114,20 @@ export default {
   },
   getNewsList() {
     return axios.post(api.getNewsList(), {headers: headers})
+  },
+  delNews(id) {
+    return axios.get(api.delNews(id), {headers: headers})
+  },
+  getOnlyNewsList(num) {
+    return axios.get(api.getOnlyNewsList(num), {headers: headers})
+  },
+  getNewsByid(id) {
+    return axios.get(api.getNewsByid(id), {headers: headers})
+  },
+  getSixNewsData() {
+    return axios.post(api.getSixNewsData(), {headers: headers})
+  },
+  blurrySearch(title) {
+    return axios.get(api.blurrySearch(title), {headers: headers})
   }
 }

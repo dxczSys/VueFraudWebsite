@@ -19,15 +19,16 @@
                         <el-menu-item index="3-3" @click="routerLink(3.3)">购物区</el-menu-item>
                     </el-submenu>
                     <el-menu-item index="4" @click="routerLink(4)">举报</el-menu-item>
-                    <el-menu-item index="5" @click="routerLink(5)">管理中心</el-menu-item>
+                    <el-menu-item v-if="curUser == 'admin'" index="5" @click="routerLink(5)">管理中心</el-menu-item>
                 </el-menu>
             </div>
 
             <div class="search">
                 <span class="tab">
-                    <el-input placeholder="搜索热门事件" style="width:18rem" v-model="searchVal">
+                    <!-- <el-input placeholder="搜索热门事件" style="width:18rem" v-model="searchVal">
                         <i slot="prefix" class="el-input__icon el-icon-search"></i>
-                    </el-input>
+                    </el-input> -->
+                    <el-autocomplete v-model="searchVal" :fetch-suggestions="querySearchAsync" placeholder="搜索热门事件" @select="handSearch"></el-autocomplete>
                 </span>
             </div>
 
@@ -47,18 +48,16 @@
 import themePicker from '../themePicker'
 export default {
     data () {
-
         return {
             index: '1',    //菜单index
             searchVal : '',   //搜索关键字
             isShow: true,   //登录注册按钮控制
+            curUser : '',   //当前登陆人
         }
     },
 
     components : { themePicker },
 
-    created () {
-    },
 
     watch: {
         searchVal(n) {
@@ -67,7 +66,8 @@ export default {
     },
 
     mounted () {
-        if (localStorage.getItem('userId') || localStorage.getItem('companyId')) {
+        if (sessionStorage.getItem('username')) {
+            this.curUser = sessionStorage.getItem('username')
             this.isShow = false
         }
     },
@@ -112,6 +112,20 @@ export default {
             localStorage.removeItem('role')
             localStorage.removeItem('companyId')
             this.$router.push({name: 'login'})
+        },
+
+        querySearchAsync(queryString, cb) {
+            this.api.blurrySearch(this.searchVal).then(res => {
+                let arr = []
+                res.data.forEach(item => {
+                    arr.push({ value : item.title, id : item.id })
+                })
+                cb(arr)
+            })
+        },
+
+        handSearch(value) {
+            this.$router.push({ name : 'browseNews', query : {id : value.id} })
         },
     }
 }

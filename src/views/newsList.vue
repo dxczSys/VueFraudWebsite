@@ -9,9 +9,9 @@
 
         <div class="content">
             <ul class="list-news">
-                <li v-for="(item1, index1) in contentData" :key="index1" class="news-item" @click="routerLinks(item1)">
+                <li v-for="(item1, index1) in contentData" :key="index1" class="news-item" @click="routerLinks(item1.id)">
                     <span class="news-title">{{item1.title}}</span>
-                    <span class="news-date">{{item1.date}}</span>
+                    <span class="news-date">{{dateFormat('YYYY-mm-dd', new Date(item1.cdate))}}</span>
                 </li>
             </ul>
         </div>
@@ -59,39 +59,53 @@ export default {
     watch : {
         '$route'(to, from) {
             this.index = to.query.typeIndex
+            this.getNewsData()
         }
     },
 
     methods : {
+        getNewsData() {
+            let num = '0'
+            switch(this.index) {
+                case 2.1 : num = '1'; break;
+                case 2.2 : num = '2'; break;
+                case 2.3 : num = '3'; break;
+                case 3.1 : num = '4'; break;
+                case 3.2 : num = '5'; break;
+                case 3.3 : num = '6'; break;
+                default : break;
+            }
+            this.api.getOnlyNewsList(num).then(res => {
+                this.contentData = res.data
+            })
+        },
         routerLinks(item) {
-            this.$router.push({ name : 'browseNews', query : {} })
-        }
+            this.$router.push({ name : 'browseNews', query : {id : item} })
+        },
+
+        dateFormat(fmt, date) {
+		    let ret
+		    let opt = {
+		        "Y+": date.getFullYear().toString(),       
+		        "m+": (date.getMonth() + 1).toString(),     
+		        "d+": date.getDate().toString(),            
+		        "H+": date.getHours().toString(),           
+		        "M+": date.getMinutes().toString(),         
+		        "S+": date.getSeconds().toString()         
+		    }
+		    for (let k in opt) {
+		        ret = new RegExp("(" + k + ")").exec(fmt);
+		        if (ret) {
+		            fmt = fmt.replace(ret[1], (ret[1].length == 1) ? (opt[k]) : (opt[k].padStart(ret[1].length, "0")))
+		        }
+		    }
+		    return fmt
+		}
     },
 
     mounted() {
         this.index = this.$route.query.typeIndex
-
-        this.contentData = [
-            {
-                title : '2019年8月举报受理处置情况',
-                date : '2019-09-12'
-            }, {
-                title : '「净网2019」五大类诈骗，不得不防',
-                date : '2019-08-29'
-            }, {
-                title : '2019年5-7月举报受理处置情况',
-                date : '2019-08-15'
-            }, {
-                title : '2019年5-7月举报受理处置情况',
-                date : '2019-08-15'
-            }, {
-                title : '2019年5-7月举报受理处置情况',
-                date : '2019-08-15'
-            }, {
-                title : '2019年5-7月举报受理处置情况',
-                date : '2019-08-15'
-            }
-        ]
+        this.getNewsData()
     }
 }
 </script>

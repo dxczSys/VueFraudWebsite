@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="registerForm animated bounceInDown">
-              <img src="../assets/title.png" class="logo" @click="backIndex"/>
+              <img src="../assets/bj.png" class="logo" @click="backIndex"/>
               <el-form :model="loginInfo" status-icon :rules="rules2" ref="loginInfo" label-width="100px" class="loginForm">
                   <el-form-item  prop="username">
                       <el-input type="text" v-model="loginInfo.username" auto-complete="off" class="loginInput" placeholder="用户名"></el-input>
@@ -15,8 +15,8 @@
               </el-form>
               <div class="footer-tip" @click="toRegister">没有账号？直接注册</div>
         </div>
-        <img class="bg_bottom" src="../assets/bg_bottom.png"/>
-        <img class="bg_bottom2" src="../assets/bg_bottom2.png"/>
+        <!-- <img class="bg_bottom" src="../assets/bg_bottom.png" style="display: none;" />
+        <img class="bg_bottom2" src="../assets/bg_bottom2.png" style="display: none;" /> -->
     </div>
 </template>
 
@@ -68,7 +68,7 @@
             this.api.userLogin(_params).then(res => {
                 if (res.status === 200 && res.data.code) {
                     sessionStorage.setItem('username', res.data.msg.uname)
-                    this.$router.push({ name: 'userInfo', params: {refresh: 1} })
+                    this.$router.push({ name: 'index'})
                     // this.$router.push({ name: 'hrView', params: {hrRefresh: 2} })
                 }else {
                     this.$message.warning('用户名或密码错误')
@@ -85,7 +85,6 @@
   .container {
     width: 100%;
     border: 1px solid #ededed;
-    background: linear-gradient(#4c4c4c, #7f7f7f);
     background-size: 100% 100%;
     min-height: 100vh;
   }
@@ -135,7 +134,7 @@
   }
 
   .logo {
-    width: 150px;
+    width: 274px;
     height: 80px;;
     cursor: pointer;
     opacity: 0.7;

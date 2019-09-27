@@ -44,17 +44,22 @@
 export default {
     data () {
         return {
-            crouselImg: [
-                {img: 'https://sxsimg.xiaoyuanzhao.com/3C/09/3C4A275077015CBF398443CC21774709.png'},
-                {img: 'https://sxsimg.xiaoyuanzhao.com/C3/55/C35273E2AAA17DBA580304E05DF22155.png'},
-                {img: 'https://sxsimg.xiaoyuanzhao.com/C6/FC/C60F54D6D175ABAF3E9A33F0FDE867FC.png'},
-                {img: 'https://sxsimg.xiaoyuanzhao.com/FD/0C/FDBBBD21A98136E3054ADDD432A5020C.png'}
-            ],
+            crouselImg: [],
             newData : [],  //头条新闻列表
         }
     },
 
     mounted () {
+        let self = this
+        this.api.getImgList().then(res => {
+            if (res.data.code) {
+                self.crouselImg = []
+                res.data.msg.forEach(item => {
+                    self.crouselImg.push({ img : item.url })
+                })
+            }
+        })
+
         this.newData = [
             {
                 title : '2019年8月举报受理处置情况',

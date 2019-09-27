@@ -7,14 +7,14 @@
             </el-tab-pane>
 
             <el-tab-pane name="2">
-                <span slot="label">诈骗趣事管理<i class="el-icon-arrow-right"></i></span>
+                <span slot="label">文章管理<i class="el-icon-arrow-right"></i></span>
                 <interest-thing :tabIndex="tabName"></interest-thing>
             </el-tab-pane>
 
-            <el-tab-pane name="3">
+            <!-- <el-tab-pane name="3">
                 <span slot="label">曝光栏管理<i class="el-icon-arrow-right"></i></span>
                 <interest-thing :tabIndex="tabName"></interest-thing>
-            </el-tab-pane>
+            </el-tab-pane> -->
 
             <el-tab-pane name="4">
                 <span slot="label">个人信息管理<i class="el-icon-arrow-right"></i></span>

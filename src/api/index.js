@@ -114,5 +114,18 @@ export default {
   // 获取感兴趣的工作
   getRecommandJob () {
     return hos + '/recruit/name'
+  },
+
+  getImgList() {
+    return '/api/RotationchartSel'
+  },
+  delImg(url) {
+    return '/api/RotationchartDel?url=' + url
+  },
+  saveNews() {
+    return '/api/InfoAdd'
+  },
+  getNewsList() {
+    return '/api/InfoSel'
   }
 }

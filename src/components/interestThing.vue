@@ -6,9 +6,18 @@
 
         <div class="content-intere">
             <el-table :data="tableData" border style="width: 100%">
-                <el-table-column prop="date" label="标题" min-width="180" header-align="center"></el-table-column>
-                <el-table-column prop="date" label="分类" width="180" align="center" header-align="center"></el-table-column>
-                <el-table-column prop="date" label="创建日期" width="200" align="center" header-align="center"></el-table-column>
+                <el-table-column prop="title" label="标题" min-width="180" header-align="center"></el-table-column>
+                <el-table-column label="分类" width="180" align="center" header-align="center">
+                    <template slot-scope="scope">
+                        <span v-if="scope.row.type == '1'"></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="cdate" label="创建日期" width="200" align="center" header-align="center"></el-table-column>
                 <el-table-column label="操作" width="100" align="center" header-align="center">
                     <template slot-scope="scope">
                         <el-button type="text" @click="deleteNews(scope)">删除</el-button>
@@ -33,9 +42,16 @@ export default {
         }
     },
 
+    mounted() {
+        this.getTable()
+    },
+
     methods : {
         getTable() {
-
+            let self = this
+            this.api.getNewsList().then(res => {
+                self.tableData = res.data
+            })
         },
 
         routerLink() {

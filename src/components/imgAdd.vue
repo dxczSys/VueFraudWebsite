@@ -7,9 +7,9 @@
                 <i class="el-icon-plus"></i>
             </el-upload>
         </div>
-        <div class="operate">
+        <!-- <div class="operate">
             <el-button type="primary" size="small">确定</el-button>
-        </div>
+        </div> -->
     </div>
 </template>
 
@@ -21,6 +21,16 @@ export default {
             imagesList : [],            //图片数组
             fileList : [],              //上传存放
         }
+    },
+
+    mounted() {
+        let self = this
+        this.api.getImgList().then(res => {
+            if (res.data.code) {
+                console.log(res.msg)
+               self.imagesList = res.data.msg 
+            }
+        })
     },
 
     methods : {
@@ -36,6 +46,11 @@ export default {
 
         handFileRemove(file, fileList) {
             this.fileList = fileList
+            this.api.delImg(file.url).then(res => {
+                if (res.data.code) {
+                    this.$message.success('删除成功')
+                }
+            })
         },
 
         handleExceed(files, fileList) {

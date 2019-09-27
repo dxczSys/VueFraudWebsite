@@ -99,5 +99,20 @@ export default {
   // 添加公司
   addCompany (companyInfo) {
     return axios.post(api.addComp(), JSON.stringify(companyInfo), {headers: headers})
+  },
+
+  getImgList() {
+    return axios.post(api.getImgList(), {headers: headers})
+  },
+
+  delImg(url) {
+    return axios.get(api.delImg(url), {headers: headers})
+  },
+
+  saveNews(content) {
+    return axios.post(api.saveNews(), JSON.stringify(content), {headers: headers})
+  },
+  getNewsList() {
+    return axios.post(api.getNewsList(), {headers: headers})
   }
 }
